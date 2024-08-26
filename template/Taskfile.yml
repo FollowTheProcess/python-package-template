@@ -63,3 +63,12 @@ tasks:
       - task: test
       - task: fmt
       - task: lint
+
+  build:
+    desc: Build the python package
+    sources:
+      - pyproject.toml
+      - uv.lock
+      - "**/*.py"
+    cmds:
+      - uv tool run --from build pyproject-build --installer uv
