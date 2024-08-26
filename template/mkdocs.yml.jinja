@@ -1,0 +1,55 @@
+site_name: "{{slug.replace('-', ' ').title()}}"
+repo_url: "{{github_url}}"
+repo_name: "{{github_username}}/{{slug}}"
+site_url: https://{{github_username}}.github.io/{{slug}}/
+site_description: {{description}}
+site_author: {{author_name}}
+use_directory_urls: false
+docs_dir: docs/src
+site_dir: docs/build
+strict: true
+nav:
+  - Home: index.md
+plugins:
+  - search
+  - include-markdown
+theme:
+  name: material
+  font:
+    text: Roboto
+    code: SF Mono
+  feature:
+    tabs: true
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: blue
+      toggle:
+        icon: material/lightbulb-outline
+        name: Dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: blue
+      toggle:
+        icon: material/lightbulb-outline
+        name: Light mode
+markdown_extensions:
+  - codehilite
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.inlinehilite
+  - admonition
+  - extra
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_div_format
+  - pymdownx.details
+  - pymdownx.tabbed
+  - toc:
+      permalink: true
+  - sane_lists

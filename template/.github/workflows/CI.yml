@@ -1,0 +1,211 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+env:
+  FORCE_COLOR: true
+
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        python-version:
+          - "3.10"
+          - "3.11"
+          - "3.12"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install uv
+        if: matrix.os != 'windows-latest'
+        shell: bash
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+  
+      - name: Intall uv
+        if: matrix.os == 'windows-latest'
+        shell: powershell
+        run: irm https://astral.sh/uv/install.ps1 | iex
+
+      - name: Get uv Cache Dir
+        id: cache
+        run: |
+          echo "dir=$(uv cache dir)"
+          echo "dir=$(uv cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.cache.outputs.dir }}
+          key: uv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('uv.lock') }}
+            uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
+            uv-${{ runner.os }}
+
+      - name: Install Dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run Unit Tests
+        run: uv run pytest -vv --cov --color yes
+
+      - name: Minimize uv cache
+        run: uv cache prune --ci
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+
+      - name: Install uv
+        shell: bash
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Get uv Cache Dir
+        id: cache
+        run: |
+          echo "dir=$(uv cache dir)"
+          echo "dir=$(uv cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.cache.outputs.dir }}
+          key: uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
+            uv-${{ runner.os }}
+
+      - name: Install Dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Ruff (Format)
+        run: uv run ruff format --check --diff
+
+      - name: Ruff (Lint)
+        run: uv run ruff check
+
+      - name: Type Checking
+        run: uv run mypy --pretty --color-output
+
+
+  codecov:
+    name: CodeCov
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+
+      - name: Install uv
+        shell: bash
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Get uv Cache Dir
+        id: cache
+        run: |
+          echo "dir=$(uv cache dir)"
+          echo "dir=$(uv cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.cache.outputs.dir }}
+          key: uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
+            uv-${{ runner.os }}
+
+      - name: Install Dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run Tests and Coverage
+        run: uv run pytest -vv --cov --cov-report xml --color yes --doctest-modules
+
+      - name: Upload Coverage to CodeCov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  docs:
+    name: Docs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+
+      - name: Install uv
+        shell: bash
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Get uv Cache Dir
+        id: cache
+        run: |
+          echo "dir=$(uv cache dir)"
+          echo "dir=$(uv cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.cache.outputs.dir }}
+          key: uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
+            uv-${{ runner.os }}
+
+      - name: Install Dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Build Docs
+        run: uv run mkdocs build --clean

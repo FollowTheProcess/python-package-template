@@ -1,0 +1,40 @@
+name:
+  help: Name of your package
+  type: str
+
+slug:
+  help: Sanitised name for packaging etc.
+  type: str
+  default: "{{name.lower().replace(' ', '_').replace('-', '_')}}"
+
+description:
+  help: Short description of your project
+  type: str
+
+license:
+  help: Which open source license to use
+  type: str
+  choices:
+    - MIT
+    - BSD-3-Clause
+    - Apache-2.0
+    - GPL-3.0-or-later
+
+github_username:
+  help: Your GitHub username
+  type: str
+
+github_url:
+  help: The GitHub URL of the package
+  type: str
+  default: https://github.com/{{github_username}}/{{slug}}
+
+author_name:
+  help: Your name
+  type: str
+
+author_email:
+  help: Your email address
+  type: str
+
+_subdirectory: template
