@@ -33,6 +33,11 @@ tasks:
       - uv run ruff check .
       - uv run mypy
 
+  docs:
+    desc: Build the documentation
+    cmds:
+      - uv run mkdocs build --clean
+
   check:
     desc: Run all the checks
     cmds:

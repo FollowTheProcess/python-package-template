@@ -36,6 +36,7 @@ dev-dependencies = [
   "ruff>=0.6.2",
   "mkdocs>=1.6.0",
   "mkdocs-material>=9.5.33",
+  "mkdocs-include-markdown-plugin>=6.2.2",
 ]
 
 [tool.pytest.ini_options]
@@ -70,9 +71,6 @@ enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
 
 [tool.ruff]
 line-length = 120
-extend-exclude = [
-  "template/**/*", # Gets confused inside the template
-]
 
 [tool.ruff.format]
 # https://docs.astral.sh/ruff/settings/#format
