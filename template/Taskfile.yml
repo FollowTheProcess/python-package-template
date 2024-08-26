@@ -2,9 +2,6 @@
 
 version: "3"
 
-env:
-  FORCE_COLOR: true
-
 tasks:
   default:
     desc: List all available tasks
@@ -19,28 +16,50 @@ tasks:
 
   test:
     desc: Run the unit tests
+    sources:
+      - pyproject.toml
+      - uv.lock
+      - "**/*.py"
     cmds:
       - uv run pytest -vv --cov --doctest-modules
 
   fmt:
     desc: Format all the things
+    sources:
+      - pyproject.toml
+      - uv.lock
+      - "**/*.py"
     cmds:
       - uv run ruff format .
 
   lint:
     desc: Run linting
+    sources:
+      - pyproject.toml
+      - uv.lock
+      - "**/*.py"
     cmds:
       - uv run ruff check .
       - uv run mypy
 
   docs:
     desc: Build the documentation
+    sources:
+      - pyproject.toml
+      - uv.lock
+      - "**/*.py"
+      - docs/src/**/*
+      - docs/img/**/*
     cmds:
       - uv run mkdocs build --clean
 
   check:
     desc: Run all the checks
+    sources:
+      - pyproject.toml
+      - uv.lock
+      - "**/*.py"
     cmds:
+      - task: test
       - task: fmt
       - task: lint
-      - task: test
