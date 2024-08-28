@@ -50,6 +50,11 @@ jobs:
       - name: Install Dependencies
         run: uv sync --all-extras --dev
 
+      - name: Set Git Config for Copier
+        run: |
+          git config user.email "test@github-actions.com"
+          git config user.name "GitHub Actions"
+
       - name: Run Unit Tests
         run: uv run pytest -vv --color yes
 
