@@ -58,8 +58,7 @@ skip_covered = true
 fail_under = 100
 
 [tool.mypy]
-# It gets confused about python files in the template
-files = [ "tests/**/*.py" ]
+files = [ "**/*.py" ]
 python_version = "3.9"
 ignore_missing_imports = true
 strict = true
