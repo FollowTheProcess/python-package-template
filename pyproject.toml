@@ -25,10 +25,8 @@ dependencies = [
 [project.urls]
 Repository = "https://github.com/FollowTheProcess/python-package-template"
 
-[tool.hatch.build.targets.wheel]
-packages = [ "." ]
-
 [tool.uv]
+package = false
 dev-dependencies = [
   "pytest>=8.2.2",
   "pytest-clarity>=1.0.1",
