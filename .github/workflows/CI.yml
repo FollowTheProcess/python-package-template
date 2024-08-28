@@ -52,8 +52,8 @@ jobs:
 
       - name: Set Git Config for Copier
         run: |
-          git config user.email "test@github-actions.com"
-          git config user.name "GitHub Actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
 
       - name: Run Unit Tests
         run: uv run pytest -vv --color yes
