@@ -16,7 +16,7 @@ jobs:
       issues: write
 
     steps:
-      - name: Checkout Code
+      - name: Check out the repository
         uses: actions/checkout@v4
 
       - name: Run Labeler
