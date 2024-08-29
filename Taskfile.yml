@@ -36,6 +36,6 @@ tasks:
   check:
     desc: Run all the checks
     cmds:
+      - task: test
       - task: fmt
       - task: lint
-      - task: test
