@@ -313,7 +313,7 @@ sdist = { url = "https://files.pythonhosted.org/packages/52/5c/cafa97944de55738a
 
 [[package]]
 name = "python-package-template"
-version = "0.5.0"
+version = "0.5.2"
 source = { virtual = "." }
 dependencies = [
     { name = "copier" },
