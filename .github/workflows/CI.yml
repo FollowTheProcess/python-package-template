@@ -29,23 +29,9 @@ jobs:
           python-version-file: pyproject.toml
 
       - name: Install uv
-        shell: bash # Setting shell gets us nice things like pipefail
-        run: curl -LsSf https://astral.sh/uv/install.sh | sh
-
-      - name: Get uv Cache Dir
-        id: cache
-        run: |
-          echo "dir=$(uv cache dir)"
-          echo "dir=$(uv cache dir)" >> $GITHUB_OUTPUT
-
-      - name: Cache uv
-        uses: actions/cache@v4
+        uses: astral-sh/setup-uv@v3
         with:
-          path: ${{ steps.cache.outputs.dir }}
-          key: uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
-          restore-keys: |
-            uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
-            uv-${{ runner.os }}
+          enable-cache: true
 
       - name: Install Dependencies
         run: uv sync --all-extras --dev
@@ -57,6 +43,3 @@ jobs:
 
       - name: Run Unit Tests
         run: uv run pytest -vv --color yes
-
-      - name: Minimize uv cache
-        run: uv cache prune --ci
