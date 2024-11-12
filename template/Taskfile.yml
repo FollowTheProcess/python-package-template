@@ -48,8 +48,7 @@ tasks:
       - pyproject.toml
       - uv.lock
       - "**/*.py"
-      - docs/src/**/*
-      - docs/img/**/*
+      - docs/**/*
     cmds:
       - uv run mkdocs build --clean
 
@@ -71,4 +70,4 @@ tasks:
       - uv.lock
       - "**/*.py"
     cmds:
-      - uv tool run --from build pyproject-build --installer uv
+      - uv build
