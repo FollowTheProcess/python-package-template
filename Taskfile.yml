@@ -39,3 +39,8 @@ tasks:
       - task: test
       - task: fmt
       - task: lint
+
+  update:
+    desc: Update all dependencies
+    cmds:
+      - uv sync --upgrade --all-extras --dev

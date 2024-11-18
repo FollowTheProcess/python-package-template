@@ -18,12 +18,8 @@ dependencies = [
   "copier==9.4.1",
 ]
 
-[project.urls]
-Repository = "https://github.com/FollowTheProcess/python-package-template"
-
-[tool.uv]
-package = false
-dev-dependencies = [
+[dependency-groups]
+dev = [
   "pytest>=8.2.2",
   "pytest-clarity>=1.0.1",
   "mypy>=1.11.2",
@@ -31,6 +27,12 @@ dev-dependencies = [
   "PyYAML>=6.0.2",
   "types-pyyaml>=6.0.12.20240808",
 ]
+
+[project.urls]
+Repository = "https://github.com/FollowTheProcess/python-package-template"
+
+[tool.uv]
+package = false
 
 [tool.pytest.ini_options]
 filterwarnings = [
