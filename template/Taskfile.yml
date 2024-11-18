@@ -63,6 +63,11 @@ tasks:
       - task: fmt
       - task: lint
 
+  update:
+    desc: Update all dependencies
+    cmds:
+      - uv sync --upgrade --all-extras --dev
+
   build:
     desc: Build the python package
     sources:
