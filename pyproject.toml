@@ -86,10 +86,6 @@ ignore = [
   "D406", # Section names should end with a newline
   "D407", # Missing dashed underline after section
 
-  # Not necessary to type annotate self and cls as it should be obvious
-  "ANN101", # Missing type annotation for self in method
-  "ANN102", # Missing type annotation for cls in classmethod
-
   # https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
   "W191",   # Tab indentation
   "E111",   # Indentation with invalid multiple
