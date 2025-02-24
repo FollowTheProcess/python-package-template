@@ -15,7 +15,7 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
-  "copier==9.4.1",
+  "copier==9.5.0",
 ]
 
 [dependency-groups]
