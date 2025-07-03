@@ -2,9 +2,7 @@
 name = "python-package-template"
 version = "0.9.1"
 description = "A modern template for python package development"
-authors = [
-  { name = "Tom Fleet", email = "tomfleet2018@gmail.com" },
-]
+authors = [{ name = "Tom Fleet", email = "me@followtheprocess.codes" }]
 readme = "README.md"
 requires-python = ">=3.13,<4"
 classifiers = [
@@ -14,9 +12,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dependencies = [
-  "copier==9.7.1",
-]
+dependencies = ["copier==9.7.1"]
 
 [dependency-groups]
 dev = [
@@ -42,14 +38,14 @@ filterwarnings = [
   "ignore::copier.vcs.ShallowCloneWarning",
 ]
 minversion = "7.0"
-addopts = [ "-ra", "--strict-markers", "--strict-config" ]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
 xfail_strict = true
 log_cli_level = "info"
-testpaths = [ "tests" ]
+testpaths = ["tests"]
 
 [tool.mypy]
 # It gets confused about python files in the template
-files = [ "tests/**/*.py" ]
+files = ["tests/**/*.py"]
 python_version = "3.13"
 ignore_missing_imports = true
 strict = true
@@ -57,7 +53,7 @@ pretty = true
 disallow_untyped_decorators = false
 show_error_codes = true
 warn_unreachable = true
-enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 
 [tool.ruff]
 line-length = 120
@@ -111,7 +107,7 @@ unfixable = [
 max-complexity = 15
 
 [tool.ruff.lint.isort]
-required-imports = [ "from __future__ import annotations" ]
+required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = [
