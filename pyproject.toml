@@ -1,6 +1,6 @@
 [project]
 name = "python-package-template"
-version = "0.9.1"
+version = "0.10.0"
 description = "A modern template for python package development"
 authors = [{ name = "Tom Fleet", email = "me@followtheprocess.codes" }]
 readme = "README.md"
