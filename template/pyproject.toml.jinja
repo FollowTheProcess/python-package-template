@@ -49,7 +49,7 @@ filterwarnings = [
 minversion = "7.0"
 addopts = [ "-ra", "--strict-markers", "--strict-config" ]
 xfail_strict = true
-log_cli_level = "info"
+log_cli_level = "INFO"
 testpaths = [ "tests" ]
 
 [tool.coverage.run]
@@ -128,8 +128,8 @@ required-imports = [ "from __future__ import annotations" ]
   "D104",   # Missing docstring in __init__.py in tests (which is fine)
   "FBT001", # Tests are allowed positional bools (fixtures etc.)
   "S",      # Security stuff is noise in tests
-  "TCH",    # Tests will be run with dev dependencies so we don't care about separating type hints
+  "TC",    # Tests will be run with dev dependencies so we don't care about separating type hints
 ]
 "conftest.py" = [
-  "TCH", # Conftest is only run for tests (with dev dependencies)
+  "TC", # Conftest is only run for tests (with dev dependencies)
 ]
